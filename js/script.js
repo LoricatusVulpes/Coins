@@ -1,19 +1,20 @@
 // JavaScript Document
 onload = init;
+// create an array to keep track of items currently in play
+var coin_array = new Array();
 
 function init(){
-	
-	var coin1 = new Coin();
-	coin1.create();
-	var coin2 = new Coin();
-	coin2.create();
-	var coin3 = new Coin();
-	coin3.create();
-	var coin4 = new Coin();
-	coin4.create();
-	var coin5 = new Coin();
-	coin5.create();
-}
+	for (var i=0; i<20;i++){
+	var anothercoin = new Coin();
+	anothercoin.create();
+	//put that new coin in the array
+	coin_array.push(anothercoin);
+	//when the new coin is clicked, use it's built in destroy function, passing the event 
+	anothercoin.item_on_page.onclick = function(e){
+		anothercoin.destroy(e);
+	}//end event handler
+	}//close for loop
+}//close init
 
 // let's make a class blueprint for each coin we make
 function Coin(){
@@ -36,7 +37,14 @@ function Coin(){
 	}
 	
 	//does many things when coin goes away
-	this.destroy = function(){
+	this.destroy = function(e){
+		//console.log("dis stuff be workin");
+		document.getElementsByTagName("body")[0].removeChild(e.target);
+		//figure out coin's position in array
+		var this_coins_index_num = coin_array.indexOf(this);
+		//splice it out of the array
+		coin_array.splice(this_coins_index_num,1);
+		//console.log(coin_array.length);
 	}
 	
 	
